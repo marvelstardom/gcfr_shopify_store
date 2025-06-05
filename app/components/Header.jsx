@@ -1,26 +1,73 @@
+import { useState, useEffect } from 'react';
 import {Suspense} from 'react';
 import {Await, NavLink} from '@remix-run/react';
 import {useAnalytics} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
+import { productImgs } from './productImgs';
 
 /**
  * @param {HeaderProps}
  */
 export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
   const {shop, menu} = header;
+  const headerText = [
+    'SALES ITEMS ARE ONLY ELIGIBLE FOR STORE CREDIT OR EXCHANGE, THEY ARE ALL NON-REFUNDABLE',
+    'GET FREE SHIPPING ON ORDERS ABOVE $200 AND MORE'
+  ]
+
+  const [count, setCount] = useState(0)
+  const [ currentSlide, setCurrentSlide ] = useState('span1')
+
+  const classItem = ['span1', 'span2']
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+    setCurrentSlide(classItem[count])
+    if(count === 1) {
+      setCount(0)
+    } else {
+      setCount(count + 1)
+    }
+    }, 4000);
+    return () => clearInterval(timer);
+  });
+
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
-    </header>
+    <div className='fixed w-[1550px] z-10 max-w-full'>
+      <div className='w-full overflow-hidden bg-black h-[40px]'>
+        <div className={`${currentSlide} transition-all duration-1000`}>
+          {headerText.map((textSpan, index) => (
+              <div key={index} className='text-center h-[40px] flex flex-col justify-center items-center'>
+                <p className='text-white text-sm uppercase'>{textSpan}</p>
+              </div>
+            ))}
+        </div>
+      </div>
+      <header className="header pt-24 backdrop-blur-md">
+        <HeaderMenu
+          menu={menu}
+          viewport="desktop"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+          publicStoreDomain={publicStoreDomain}
+        />
+        <div className='flex items-end justify-center space-x-6 pb-2'>
+          <NavLink className='' prefetch="intent" to="/" style={activeLinkStyle} end>
+            {
+              productImgs.map((item, i) => (
+                <div key={i}>
+                  <img src={item.img1} alt="" className='w-[120px]' />
+                </div>
+              ))
+            }
+          </NavLink>
+        </div>
+
+
+        <div className='z-5'>
+          <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} className='' />
+        </div>
+      </header>
+    </div>
   );
 }
 
@@ -120,11 +167,27 @@ function HeaderMenuMobileToggle() {
   );
 }
 
+// function SearchToggle() {
+//   const {open} = useAside();
+//   return (
+//     <button onClick={() => open('search')} className="flex items-center gap-2 text-black hover:text-[#e3a81e] text-md cursor-pointer">
+//       {/* Search */}
+//       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6"><path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" /></svg>
+//     </button>
+//   );
+// }
+
+
 function SearchToggle() {
-  const {open} = useAside();
+  const { open } = useAside();
+
   return (
-    <button className="reset" onClick={() => open('search')}>
-      Search
+    <button
+      onClick={() => open('search')}
+      className="reset flex items-center gap-2 text-black hover:text-[#e3a81e] text-md cursor-pointer"
+      aria-label="Search"
+    >
+      <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6"><path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" /></svg></span>
     </button>
   );
 }
@@ -139,6 +202,7 @@ function CartBadge({count}) {
   return (
     <a
       href="/cart"
+      className='flex items-center gap-2 text-black hover:text-[#e3a81e] text-md'
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -150,7 +214,12 @@ function CartBadge({count}) {
         });
       }}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      {/* <span> */}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6"><path fillRule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clipRule="evenodd" /></svg>
+      {/* </span> */}
+      <span>
+        {count === null ? <span>&nbsp;</span> : count}
+      </span>
     </a>
   );
 }
@@ -208,6 +277,15 @@ const FALLBACK_HEADER_MENU = {
       title: 'About',
       type: 'PAGE',
       url: '/pages/about',
+      items: [],
+    },
+    {
+      id: 'gid://shopify/MenuItem/461609599032',
+      resourceId: 'gid://shopify/Page/92591030328',
+      tags: [],
+      title: 'Contact',
+      type: 'HTTP',
+      url: '/contact',
       items: [],
     },
   ],

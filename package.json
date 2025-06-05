@@ -13,15 +13,21 @@
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@heroicons/react": "^2.1.5",
     "@remix-run/react": "^2.10.1",
     "@remix-run/server-runtime": "^2.10.1",
     "@shopify/hydrogen": "2024.7.4",
     "@shopify/remix-oxygen": "^2.0.6",
+    "framer-motion": "^12.16.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "isbot": "^3.8.0",
+    "lucide-react": "^0.511.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "swiper": "^11.1.12"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.2",
@@ -37,9 +43,12 @@
     "@types/eslint": "^8.4.10",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8.20.0",
     "eslint-plugin-hydrogen": "0.12.2",
+    "postcss": "^8.4.47",
     "prettier": "^2.8.4",
+    "tailwindcss": "^4.0.0-alpha.17",
     "typescript": "^5.2.2",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.3.1"

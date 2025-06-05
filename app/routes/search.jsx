@@ -39,23 +39,26 @@ export default function SearchPage() {
   if (type === 'predictive') return null;
 
   return (
-    <div className="search">
-      <h1>Search</h1>
-      <SearchForm>
-        {({inputRef}) => (
-          <>
-            <input
-              defaultValue={term}
-              name="q"
-              placeholder="Search…"
-              ref={inputRef}
-              type="search"
-            />
-            &nbsp;
-            <button type="submit">Search</button>
-          </>
-        )}
-      </SearchForm>
+    <div className="search mt-40 px-16 w-full">
+      <h1 className='font-medium text-3xl'>Search for a Product</h1>
+      <div className='mb-4 w-full'>
+        <SearchForm>
+          {({inputRef}) => (
+            <>
+              <input
+                defaultValue={term}
+                name="q"
+                placeholder="Search…"
+                ref={inputRef}
+                type="search"
+                className='outline-none w-[70%]'
+              />
+              &nbsp;
+              <button type="submit" className='bg-amber-400 px-8 py-2.5 rounded-lg text-black cursor-pointer hover:bg-amber-300 hover:transition-all delay-150 ease-in-out'>Search</button>
+            </>
+          )}
+        </SearchForm>
+      </div>
       {error && <p style={{color: 'red'}}>{error}</p>}
       {!term || !result?.total ? (
         <SearchResults.Empty />

@@ -3,6 +3,8 @@ import {useLoaderData, Link} from '@remix-run/react';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import { Footer } from '~/components/Footer';
+import FooterLinks from '~/components/FooterLinks';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -59,20 +61,26 @@ export default function Collection() {
   const {products} = useLoaderData();
 
   return (
-    <div className="collection">
-      <h1>Products</h1>
-      <PaginatedResourceSection
-        connection={products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
-        )}
-      </PaginatedResourceSection>
+    <div>
+      <div className="collection pt-48 px-16">
+        <div className='border-b border-b-amber-300 mb-12'>
+          <h1 className='font-semibold text-4xl'>All Products</h1>
+        </div>
+        <PaginatedResourceSection
+          connection={products}
+          resourcesClassName="products-grid"
+        >
+          {({node: product, index}) => (
+            <ProductItem
+              key={product.id}
+              product={product}
+              loading={index < 8 ? 'eager' : undefined}
+            />
+          )}
+        </PaginatedResourceSection>
+      </div>
+      <FooterLinks />
+      <Footer />
     </div>
   );
 }
@@ -102,8 +110,8 @@ function ProductItem({product, loading}) {
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
-      <small>
+      <h4 className='mt-4 text-lg'>{product.title}</h4>
+      <small className='text-lg font-medium'>
         <Money data={product.priceRange.minVariantPrice} />
       </small>
     </Link>
@@ -134,7 +142,7 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
         ...MoneyProductItem
       }
     }
-    variants(first: 1) {
+    variants(first: 2) {
       nodes {
         selectedOptions {
           name

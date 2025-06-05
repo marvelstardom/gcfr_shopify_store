@@ -1,5 +1,7 @@
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {useLoaderData, Link} from '@remix-run/react';
+import { Footer } from '~/components/Footer';
+import FooterLinks from '~/components/FooterLinks';
 import {
   getPaginationVariables,
   Image,
@@ -8,6 +10,7 @@ import {
 } from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -78,29 +81,35 @@ export default function Collection() {
   const {collection} = useLoaderData();
 
   return (
-    <div className="collection">
-      <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
-      <PaginatedResourceSection
-        connection={collection.products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
-        )}
-      </PaginatedResourceSection>
-      <Analytics.CollectionView
-        data={{
-          collection: {
-            id: collection.id,
-            handle: collection.handle,
-          },
-        }}
-      />
+    <div>
+      <div className="collection pt-52 px-16">
+        <div className="border-b border-b-amber-300 mb-12">
+          <h1 className='text-4xl font-semibold'>{collection.title}</h1>
+        </div>
+        <p className="collection-description">{collection.description}</p>
+        <PaginatedResourceSection
+          connection={collection.products}
+          resourcesClassName="products-grid"
+        >
+          {({node: product, index}) => (
+            <ProductItem
+              key={product.id}
+              product={product}
+              loading={index < 8 ? 'eager' : undefined}
+            />
+          )}
+        </PaginatedResourceSection>
+        <Analytics.CollectionView
+          data={{
+            collection: {
+              id: collection.id,
+              handle: collection.handle,
+            },
+          }}
+        />
+      </div>
+      <FooterLinks/>
+      <Footer/>
     </div>
   );
 }
@@ -130,8 +139,8 @@ function ProductItem({product, loading}) {
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
-      <small>
+      <h4 className='font-normal text-xl mt-5 mb-1'>{product.title}</h4>
+      <small className='text-lg font-medium'>
         <Money data={product.priceRange.minVariantPrice} />
       </small>
     </Link>

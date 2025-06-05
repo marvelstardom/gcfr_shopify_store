@@ -10,6 +10,10 @@ import {getVariantUrl} from '~/lib/variants';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
+import { Footer } from '~/components/Footer';
+import FooterLinks from '~/components/FooterLinks';
+
+
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -138,61 +142,69 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   return (
-    <div className="product">
-      <ProductImage image={selectedVariant?.image} />
-      <div className="product-main">
-        <h1>{title}</h1>
-        <ProductPrice
-          price={selectedVariant?.price}
-          compareAtPrice={selectedVariant?.compareAtPrice}
-        />
-        <br />
-        <Suspense
-          fallback={
-            <ProductForm
-              product={product}
-              selectedVariant={selectedVariant}
-              variants={[]}
+    <div className="">
+      <div className='pt-44 pb-28 px-24'>
+        <div className="product relative">
+          <div className=''>
+            <ProductImage image={selectedVariant?.image} className="" />
+          </div>
+          <div className="product-main">
+            <h1 className='font-semibold text-4xl'>{title}</h1>
+            <ProductPrice
+              price={selectedVariant?.price}
+              compareAtPrice={selectedVariant?.compareAtPrice} 
             />
-          }
-        >
-          <Await
-            errorElement="There was a problem loading product variants"
-            resolve={variants}
-          >
-            {(data) => (
-              <ProductForm
-                product={product}
-                selectedVariant={selectedVariant}
-                variants={data?.product?.variants.nodes || []}
-              />
-            )}
-          </Await>
-        </Suspense>
-        <br />
-        <br />
-        <p>
-          <strong>Description</strong>
-        </p>
-        <br />
-        <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <br />
+            <br />
+            <Suspense
+              fallback={
+                <ProductForm
+                  product={product}
+                  selectedVariant={selectedVariant}
+                  variants={[]}
+                />
+              }
+            >
+              <Await
+                errorElement="There was a problem loading product variants"
+                resolve={variants}
+              >
+                {(data) => (
+                  <ProductForm
+                    product={product}
+                    selectedVariant={selectedVariant}
+                    variants={data?.product?.variants.nodes || []}
+                  />
+                )}
+              </Await>
+            </Suspense>
+            <br />
+            <br />
+            <p>
+              <strong>Product Description</strong>
+            </p>
+            {/* <br /> */}
+            <div dangerouslySetInnerHTML={{__html: descriptionHtml}} className='text-justify' />
+            <br />
+          </div>
+          <Analytics.ProductView
+            data={{
+              products: [
+                {
+                  id: product.id,
+                  title: product.title,
+                  price: selectedVariant?.price.amount || '0',
+                  vendor: product.vendor,
+                  variantId: selectedVariant?.id || '',
+                  variantTitle: selectedVariant?.title || '',
+                  quantity: 1,
+                },
+              ],
+            }}
+          />
+        </div>
       </div>
-      <Analytics.ProductView
-        data={{
-          products: [
-            {
-              id: product.id,
-              title: product.title,
-              price: selectedVariant?.price.amount || '0',
-              vendor: product.vendor,
-              variantId: selectedVariant?.id || '',
-              variantTitle: selectedVariant?.title || '',
-              quantity: 1,
-            },
-          ],
-        }}
-      />
+      <FooterLinks/>
+      <Footer/>
     </div>
   );
 }

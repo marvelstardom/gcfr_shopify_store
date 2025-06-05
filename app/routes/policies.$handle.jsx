@@ -1,5 +1,6 @@
 import {json} from '@shopify/remix-oxygen';
 import {Link, useLoaderData} from '@remix-run/react';
+import FooterLinks from '~/components/FooterLinks';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -45,15 +46,19 @@ export default function Policy() {
   const {policy} = useLoaderData();
 
   return (
-    <div className="policy">
+    <div className="policy pt-32 text-justify">
+      {/* <br /> */}
       <br />
+      {/* <div className='text-white'>
+        <Link to="/policies" className='text-white bg-amber-400 px-10 py-4 rounded-3xl'>← Back to Policies</Link>
+      </div> */}
       <br />
-      <div>
-        <Link to="/policies">← Back to Policies</Link>
+      <div className='px-40'>
+        <h1 className='pt-20 pb-5 text-5xl font-medium'>{policy.title}</h1>
+        <div dangerouslySetInnerHTML={{__html: policy.body}} />
       </div>
-      <br />
-      <h1>{policy.title}</h1>
-      <div dangerouslySetInnerHTML={{__html: policy.body}} />
+
+      <FooterLinks />
     </div>
   );
 }
