@@ -1,6 +1,7 @@
 import {Suspense} from 'react';
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {Await, useLoaderData} from '@remix-run/react';
+import { json } from '@shopify/remix-oxygen';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -42,7 +43,7 @@ export async function loader(args) {
  */
 async function loadCriticalData({context, params, request}) {
   const {handle} = params;
-  const {storefront} = context;
+  const {storefront, buyerCountryCode} = context;
 
   if (!handle) {
     throw new Error('Expected product handle to be defined');
@@ -51,6 +52,9 @@ async function loadCriticalData({context, params, request}) {
   const [{product}] = await Promise.all([
     storefront.query(PRODUCT_QUERY, {
       variables: {handle, selectedOptions: getSelectedProductOptions(request)},
+      buyerIdentity: {
+        countryCode: buyerCountryCode, // ← this is what Shopify is asking for
+      },
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
@@ -76,9 +80,10 @@ async function loadCriticalData({context, params, request}) {
     }
   }
 
-  return {
-    product,
-  };
+  // return {
+  //   product,
+  // };
+  return json({products: response});
 }
 
 /**

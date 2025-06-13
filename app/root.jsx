@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {useNonce, getShopAnalytics, Analytics} from '@shopify/hydrogen';
 import {defer} from '@shopify/remix-oxygen';
 import {
@@ -16,6 +17,7 @@ import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+// import DialogflowChatbot from './components/DialogflowChatbot';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -56,14 +58,36 @@ export function links() {
 /**
  * @param {LoaderFunctionArgs} args
  */
+
+const currencyToCountry = {
+  USD: 'US',
+  NGN: 'NG',
+  GBP: 'GB',
+};
+
+/**
+ * @param {LoaderFunctionArgs} args
+ */
 export async function loader(args) {
+  const {request, context} = args;
+  const url = new URL(request.url);
+
+  // Get selected currency from query param (?currency=NGN), default to USD
+  const selectedCurrency = url.searchParams.get('currency') || 'USD';
+
+  // Map currency to Shopify country code
+  const buyerCountryCode = currencyToCountry[selectedCurrency] || 'US';
+
+  // Pass to context so it's available in Storefront queries
+  context.buyerCountryCode = buyerCountryCode;
+
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  const {storefront, env} = args.context;
+  const {storefront, env} = context;
 
   return defer({
     ...deferredData,
@@ -77,8 +101,10 @@ export async function loader(args) {
       checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
     },
+    currency: selectedCurrency, // ⬅ Pass currency to the app
   });
 }
+
 
 /**
  * Load data necessary for rendering content above the fold. This is the critical data
@@ -160,6 +186,19 @@ export function Layout({children}) {
         ) : (
           children
         )}
+
+        {/* ✅ Add chatbot just above the footer or at bottom of body */}
+        <df-messenger
+          intent="WELCOME"
+          chat-title="GCFR_FAQ"
+          agent-id="90c19923-e6c5-4ac0-94f9-6a24f64f0502"
+          language-code="en"
+        ></df-messenger>
+        <script
+          src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"
+          nonce={nonce}
+        ></script>
+        
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>

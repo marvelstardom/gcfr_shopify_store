@@ -37,13 +37,13 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
       <div className='w-full overflow-hidden bg-black h-[40px]'>
         <div className={`${currentSlide} transition-all duration-1000`}>
           {headerText.map((textSpan, index) => (
-              <div key={index} className='text-center h-[40px] flex flex-col justify-center items-center'>
+              <div key={index} className='text-center h-[40px] flex flex-col justify-center items-center lg:px-0 lg:py-0 px-6'>
                 <p className='text-white text-sm uppercase'>{textSpan}</p>
               </div>
             ))}
         </div>
       </div>
-      <header className="header pt-24 backdrop-blur-md">
+      <header className="header lg:pt-0 backdrop-blur-md lg:justify-around justify-between lg:w-auto w-full lg:py-0 py-0 lg:px-5 px-10 lg:mx-16 md:mx-14 mx-0">
         <HeaderMenu
           menu={menu}
           viewport="desktop"
@@ -61,7 +61,6 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
             }
           </NavLink>
         </div>
-
 
         <div className='z-5'>
           <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} className='' />
@@ -151,6 +150,7 @@ function HeaderCtas({isLoggedIn, cart}) {
       </NavLink>
       <SearchToggle />
       <CartToggle cart={cart} />
+      <CurrencySwitcher />
     </nav>
   );
 }
@@ -191,6 +191,48 @@ function SearchToggle() {
     </button>
   );
 }
+
+function CurrencySwitcher() {
+  const [currency, setCurrency] = useState(
+    typeof window !== 'undefined' && localStorage.getItem('selected-currency') || 'NGN'
+  );
+
+  const handleChange = (e) => {
+    const selectedCurrency = e.target.value;
+    setCurrency(selectedCurrency);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selected-currency', selectedCurrency);
+      window.location.href = `/?currency=${selectedCurrency}`; // reload with query param
+    }
+  };
+
+  return (
+    <div className="ml-4">
+      <label htmlFor="currency" className="sr-only">Currency</label>
+      <select
+        id="currency"
+        value={currency}
+        onChange={handleChange}
+        className="border px-2 py-1 text-sm rounded-md"
+      >
+        <option value="NGN">NGN (₦)</option>
+        <option value="USD">USD ($)</option>
+        <option value="GBP">GBP (£)</option>
+      </select>
+    </div>
+  );
+}
+
+
+// function Currency(){
+//   const {shop} = useAnalytics();
+//   return (
+//     <div className='flex items-center gap-2 text-black hover:text-[#e3a81e] text-md'>
+//       <span className='text-sm'>Currency:</span>
+//       <span className='text-sm'>{shop.currencyCode}</span>
+//     </div>
+//   );
+// }
 
 /**
  * @param {{count: number | null}}

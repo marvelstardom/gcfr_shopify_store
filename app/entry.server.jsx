@@ -16,12 +16,23 @@ export default async function handleRequest(
   responseHeaders,
   remixContext,
   context,
-) {
+) {  
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+  //   directives: {
+  //   'script-src': [
+  //     "'self'",
+  //     `'nonce-${nonce}'`,
+  //     'https://www.gstatic.com',
+  //   ],
+  //   'frame-src': [
+  //     'https://www.gstatic.com',
+  //     'https://dialogflow.cloud.google.com',
+  //   ],
+  // },
   });
 
   const body = await renderToReadableStream(

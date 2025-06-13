@@ -10,7 +10,7 @@ export const sliderContent = [
         ]
     },
     {
-        title: 'Luxury Redefined',
+        title: 'Timeless Luxury Redefined',
         slug: 'Step into a world of timeless elegance. Our collection of handcrafted suits combines classic craftsmanship with modern design to make you look and feel your best for every occasion.',
         image: 'https://cdn.shopify.com/s/files/1/0893/4555/6809/files/fashion-peach.jpg',
         images: [

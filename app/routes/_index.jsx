@@ -10,7 +10,9 @@ import Slider from '~/components/Slider';
 import Swiper from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 import {motion, AnimatePresence} from 'framer-motion';
-
+import Testimonials from '~/components/Testimonials';
+import DialogflowChatbot from '~/components/DialogflowChatbot';
+import FAQComponent from '~/components/FAQComponent';
 
 /**
  * @type {MetaFunction}
@@ -103,29 +105,64 @@ export default function Homepage() {
 
   return (
     <div className='mx-0'>
-      {/* Slider */}
-      <div className='mt-32'>
-        <Slider />
-      </div>
+  {/* Slider */}
+  <div className='mt-20 sm:mt-28 md:mt-32'>
+    <Slider />
+  </div>
 
-      {/* Featured Products */}
-      <div className='z-10 relative py-10  px-16'>
-        <FeaturedCollection collections={data.featuredCollection} />
-      </div>
+  {/* Featured Products */}
+  <div className='z-10 relative py-10 px-4 sm:px-4 md:px-10 lg:px-16'>
+    <FeaturedCollection collections={data.featuredCollection} />
+  </div>
 
-      <div className='z-10 relative pt-10 pb-0 px-16'>
-        <RecommendedProducts products={data.recommendedProducts} />
-      </div>
+  <div className='z-10 relative py-10 pb-0 px-4 sm:px-6 md:px-10 lg:px-16'>
+    <RecommendedProducts products={data.recommendedProducts} />
+  </div>
 
-      <div className='z-10 relative pb-10 pt-0 px-16'>
-        <TabComponent collectionsData={data} />
-      </div>
+  <div className='z-10 relative pb-10 pt-10 lg:pt-0 px-4 sm:px-6 md:px-10 lg:px-16'>
+    <TabComponent collectionsData={data} />
+  </div>
+
+  <div className='z-10 relative pt-16'>
+    <Testimonials />
+  </div>
+
+  <div className='z-10 relative pt-16'>
+    <FAQComponent />
+  </div>
+
+  {/* Chatbot */}
+  <div className='z-20 relative'>
+    <DialogflowChatbot />
+  </div>
+  <div className='z-10 relative'>
+    <FooterLinks />
+  </div>
+</div>
+
+    // <div className='mx-0'>
+    //   {/* Slider */}
+    //   <div className='mt-32'>
+    //     <Slider />
+    //   </div>
+
+    //   {/* Featured Products */}
+    //   <div className='z-10 relative py-10  px-16'>
+    //     <FeaturedCollection collections={data.featuredCollection} />
+    //   </div>
+
+    //   <div className='z-10 relative pt-10 pb-0 px-16'>
+    //     <RecommendedProducts products={data.recommendedProducts} />
+    //   </div>
+
+    //   <div className='z-10 relative pb-10 pt-0 px-16'>
+    //     <TabComponent collectionsData={data} />
+    //   </div>
       
-      <div className='z-10 relative'>
-        <FooterLinks/>
-        {/* <Footer /> */}
-      </div>
-    </div>
+    //   <div className='z-10 relative'>
+    //     <FooterLinks/>
+    //   </div>
+    // </div>
   );
 }
 
@@ -164,8 +201,12 @@ export function TabComponent({ collectionsData }) {
 
   return (
     <div>
-      <h2 className="text-black text-center font-semibold text-5xl mb-8">Smart Collections For You</h2>
-      <p className='uppercase text-gray-400 text-lg text-center'>Handpicked With Style in Mind</p>
+      <h2 className="text-black text-center font-semibold text-4xl sm:text-3xl md:text-4xl lg:text-5xl mb-4 sm:mb-6 md:mb-8 px-8 lg:px-0">
+        Smart Collections For You
+      </h2>
+      <p className='uppercase text-gray-400 text-sm sm:text-base md:text-lg text-center'>
+        Handpicked With Style in Mind
+      </p>
       {/* Tabs */}
       <div className="flex flex-wrap justify-center gap-4 mb-10 mt-6">
         {tabs.map((tab) => (
@@ -185,7 +226,7 @@ export function TabComponent({ collectionsData }) {
       </div>
 
       {/* Products grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {visibleProducts.length === 0 ? (
           <p className="text-center col-span-full text-gray-500">No products available.</p>
         ) : (
@@ -238,15 +279,14 @@ export function TabComponent({ collectionsData }) {
 function FeaturedCollection({collections}) {
   if (!collections || collections.length === 0) return null;
   
-  
   return (
-    <div className='flex justify-between items-stretch gap-2 w-full'>
+    <div className='flex lg:justify-between justify-center lg:flex-nowrap flex-wrap items-start lg:items-stretch lg:gap-2 gap-4 gap-y-0 w-full'>
       {collections.map((collection) => {
         const image = collection.image;
         return (
           <Link
             key={collection.id}
-            className='featured-collection w-72'
+            className='featured-collection lg:w-72 w-28 h-auto'
             to={`/collections/${collection.handle}`}
           >
             {image && (
@@ -274,7 +314,7 @@ function FeaturedCollection({collections}) {
 function RecommendedProducts({products}) {
   return (
     <div className="recommended-products lg:pb-20 sm:pb-24 z-0">
-      <h2 className='text-black text-center lg:pt-24 sm:pt-12 font-semibold lg:text-5xl text-5xl lg:mb-4 sm:mb-2'>Recommended Products</h2>
+      <h2 className='text-black text-center lg:pt-24 sm:pt-12 font-semibold lg:text-5xl text-4xl lg:mb-4 sm:mb-2'>Recommended Products</h2>
       <p className='uppercase text-gray-400 text-lg text-center'>Carefully Chosen For You</p>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>

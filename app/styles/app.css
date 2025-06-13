@@ -23,6 +23,17 @@
   background-image: url('https://cdn.shopify.com/s/files/1/0893/4555/6809/files/fashion-blue-yellow_3.jpg?v=1726226566');
 }
 
+df-messenger {
+  --df-messenger-bot-message: #e3a81e;
+  --df-messenger-button-titlebar-color: #db9900;
+  --df-messenger-chat-background-color: white;
+  margin-bottom: 80px; /* Push it up above your footer if needed */
+  z-index: 9999;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
 /*
 * --------------------------------------------------
 * components/Aside
@@ -162,18 +173,17 @@ button.reset:hover:not(:has(> *)) {
   align-items: center;
   background: #ffffff79;
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   align-items: center;
-  width: auto;
+  /* width: auto; */
   /* height: var(--header-height); */
   height: 80px;
-  padding: 0 20px;
+  /* padding: 0 20px; */
   position: sticky;
-  margin: 6px 66px;
+  /* margin: 6px 66px; */
   border-radius: 50px;
   top: 0;
   z-index: 10 !important;
-  /* margin-top: 0 !important; */
 }
 
 .header-menu-mobile-toggle {

@@ -12,32 +12,30 @@ export default function Slider() {
       setCount((prev) => (prev + 1) % sliderContent.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [count]);
 
-  const handlePrevSlide = (e) => {
-    e.preventDefault();
+  const handlePrevSlide = () => {
     setCount((prev) => (prev - 1 + sliderContent.length) % sliderContent.length);
   };
 
-  const handleNextSlide = (e) => {
-    e.preventDefault();
+  const handleNextSlide = () => {
     setCount((prev) => (prev + 1) % sliderContent.length);
   };
 
   return (
     <div className="">
-      <div className="overflow-hidden w-full sm:h-[400px] h-[400px] lg:h-[570px] relative">
+      <div className="overflow-hidden w-full relative h-[700px] sm:h-[600px] md:h-[570px]">
         <div
-          className="flex transition-all duration-1000 ease-in-out min-w-full"
-          style={{ transform: `translateX(-${count * 100}%)`, 
+          className="flex transition-transform duration-1000 ease-in-out"
+          style={{ transform: `translateX(-${count * (100 / sliderContent.length)}%)`, 
           width: `${sliderContent.length * 100}%` 
         }}
         >
           {sliderContent.map((item, id) => (
-            <div key={id} className="w-full relative">
-              <img alt="itemImage" src={item.image} className="w-full h-[400px] lg:h-[570px] object-cover rounded-none" />
+            <div key={id} className="w-full flex-shrink-0 relative" style={{ width: `${100 / sliderContent.length}%` }}>
+              <img alt="slide" src={item.image} className="w-full h-[700px] md:h-[570px] sm:h-[600px] object-cover rounded-none" />
 
-              <div className="absolute top-1/5 left-10 text-white pl-24 pr-40">
+              <div className="absolute top-[20%] left-10 text-white pl-24 pr-40">
                 <h1 className="lg:text-7xl text-5xl font-bold mb-4 w-1/2">{item.title}</h1>
                 <p className="lg:text-xl text-sm w-1/2">{item.slug}</p>
                 <div className="mt-6">
@@ -61,6 +59,17 @@ export default function Slider() {
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="lg:w-8 lg:h-6 sm:w-6 sm:h-12 cursor-pointer"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
           </button>
         </div>
+      </div>
+      <div className="flex justify-center mt-4 space-x-2 relative bottom-12">
+        {sliderContent.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCount(index)}
+            className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+              count === index ? 'bg-black' : 'bg-gray-300'
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
