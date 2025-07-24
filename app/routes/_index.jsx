@@ -13,6 +13,7 @@ import {motion, AnimatePresence} from 'framer-motion';
 import Testimonials from '~/components/Testimonials';
 import DialogflowChatbot from '~/components/DialogflowChatbot';
 import FAQComponent from '~/components/FAQComponent';
+import GCFRChatbot from '~/components/GCFRChatbot';
 
 /**
  * @type {MetaFunction}
@@ -132,10 +133,8 @@ export default function Homepage() {
   </div>
 
   {/* Chatbot */}
-  <div className='z-20 relative'>
-    <DialogflowChatbot />
-  </div>
   <div className='z-10 relative'>
+    <GCFRChatbot />
     <FooterLinks />
   </div>
 </div>

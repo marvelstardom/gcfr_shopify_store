@@ -71,7 +71,7 @@ export default function Testimonials() {
 
   return (
     <div className="bg-gray-100 py-16 px-4 relative">
-      <h2 className="text-3xl font-bold text-center">What Our Clients Say</h2>
+      <h2 className="text-3xl md:text-4xl font-semibold text-center">What Our Clients Say</h2>
 
       <div className="relative w-full overflow-hidden max-w-7xl mx-auto mt-10">
         <div

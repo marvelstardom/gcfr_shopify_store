@@ -3,7 +3,6 @@ import { Image } from '@shopify/hydrogen';
 import { Link } from '@remix-run/react';
 import { sliderContent } from './sliderContent';
 
-
 export default function Slider() {
   const [count, setCount] = useState(0);
 

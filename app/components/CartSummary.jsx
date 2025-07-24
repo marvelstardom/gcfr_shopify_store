@@ -9,10 +9,10 @@ export function CartSummary({cart, layout}) {
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
+      <h4 className='font-medium text-lg'>Totals</h4>
+      <dl className="cart-subtotal flex justify-between items-center">
+        <dt>Subtotal: &nbsp;</dt>
+        <dd className='text-xl font-semibold'>
           {cart.cost?.subtotalAmount?.amount ? (
             <Money data={cart.cost?.subtotalAmount} />
           ) : (
@@ -20,6 +20,7 @@ export function CartSummary({cart, layout}) {
           )}
         </dd>
       </dl>
+
       <CartDiscounts discountCodes={cart.discountCodes} />
       <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
     </div>
@@ -33,9 +34,11 @@ function CartCheckoutActions({checkoutUrl}) {
 
   return (
     <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
-      </a>
+      <div className='py-3 px-3 bg-[#e6a817] rounded-lg flex justify-center items-center text-white'>
+        <a href={checkoutUrl} target="_self">
+          <p>Continue to Checkout &rarr;</p>
+        </a>
+      </div>
       <br />
     </div>
   );
@@ -70,10 +73,10 @@ function CartDiscounts({discountCodes}) {
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div>
-          <input type="text" name="discountCode" placeholder="Discount code" />
+        <div className='my-4 flex justify-between'>
+          <input type="text" name="discountCode" placeholder="Discount code" className='px-3 py-1.5 rounded-lg w-full' />
           &nbsp;
-          <button type="submit">Apply</button>
+          <button type="submit" className='cursor-pointer bg-gray-200 px-3 py-1.5 rounded-lg w-[100px] hover:bg-white hover:outline hover:outline-gray-300  transition ease-in duration-700'>Apply</button>
         </div>
       </UpdateDiscountForm>
     </div>

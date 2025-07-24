@@ -6,7 +6,7 @@ import FooterLinks from '~/components/FooterLinks';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.policy.title ?? ''}`}];
+  return [{title: `GCFR | ${data?.policy.title ?? ''}`}];
 };
 
 /**

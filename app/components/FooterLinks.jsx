@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, MapPin, Phone, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
+import { Mail, MapPin, Phone, Facebook, Instagram, Twitter } from 'lucide-react';
 import { productImgs } from './productImgs';
 
 export default function FooterLinks() {
@@ -29,12 +29,12 @@ export default function FooterLinks() {
           <div className='w-full md:w-full lg:w-[15%]'>
             <h3 className="lg:text-lg font-semibold lg:mb-4 md:mb-4 mb-2">Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="/" className="hover:text-[#e3a81e] hover:underline">Home</a></li>
-              <li><a href="/collections/all" className="hover:text-[#e3a81e] hover:underline">Catalog</a></li>
-              <li><a href="/collections" className="hover:text-[#e3a81e] hover:underline">Collections</a></li>
-              <li><a href="/policies/privacy-policy" className="hover:text-[#e3a81e] hover:underline">Privacy Policy</a></li>
-              <li><a href="/policies/terms-of-service" className="hover:text-[#e3a81e] hover:underline">Terms of Service</a></li>
-              <li><a href="/contact" className="hover:text-[#e3a81e] hover:underline">Contact</a></li>
+              <li><a href="/" className="hover:text-[#e3a81e] ">Home</a></li>
+              <li><a href="/collections/all" className="hover:text-[#e3a81e] ">Catalog</a></li>
+              <li><a href="/collections" className="hover:text-[#e3a81e] ">Collections</a></li>
+              <li><a href="/policies/privacy-policy" className="hover:text-[#e3a81e] ">Privacy Policy</a></li>
+              {/* <li><a href="/policies/terms-of-service" className="hover:text-[#e3a81e] ">Terms of Service</a></li> */}
+              <li><a href="/contact" className="hover:text-[#e3a81e] ">Contact</a></li>
             </ul>
           </div>
 
@@ -48,7 +48,7 @@ export default function FooterLinks() {
               </li>
               <li className="flex items-start gap-2 lg:w-auto w-[300px]">
                 <MapPin size={20} />
-                <span className=''>200 Commercial Road, Byker, Newcastle upon Tyne, NE6 2ED, UK</span>
+                <span className=''>United Kingdom.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Phone size={16} />
@@ -75,7 +75,7 @@ export default function FooterLinks() {
               />
               <button
                 type="submit"
-                className="bg-[#febc22] border border-[#febc22] text-black px-4 py-2 rounded-lg hover:bg-gray-200 transition"
+                className="bg-[#febc22] border border-[#febc22] hover:border hover:border-black hover:text-white text-black px-4 py-2 rounded-lg hover:bg-black transition cursor-pointer"
               >
                 Subscribe
               </button>
@@ -84,14 +84,14 @@ export default function FooterLinks() {
             {/* Social Icons */}
             <div className='mt-6'>
               <div className='flex gap-3'>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e]">
+                <a href="https://www.facebook.com/share/1CKnx5pwLZ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e]">
                   <Facebook size={30} />
                 </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e]">
+                <a href="https://www.instagram.com/g_c_f_r?igsh=amU1OG9pMXQ5djc2&utm_source=qr" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e]">
                   <Instagram size={30} />
                 </a>
-                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e]">
-                  <Linkedin size={30} />
+                <a href="https://www.tiktok.com/@g_c_f_r?_t=ZN-8xAnFY342jO&_r=1" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e]">
+                  <span className='text-black font-bold outline-2 outline-black'>t</span>
                 </a>
               </div>
             </div>
