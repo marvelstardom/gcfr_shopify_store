@@ -76,6 +76,7 @@ function SearchAside() {
                 placeholder="Search"
                 ref={inputRef}
                 type="search"
+                className='p-2 rounded-lg'
               />
               &nbsp;
               <button onClick={goToSearch}>Search</button>

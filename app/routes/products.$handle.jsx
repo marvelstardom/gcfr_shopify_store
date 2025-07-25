@@ -20,20 +20,20 @@ import FooterLinks from '~/components/FooterLinks';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
+  return [{title: `GCFR | ${data?.product.title ?? ''}`}];
 };
 
 /**
  * @param {LoaderFunctionArgs} args
  */
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return defer({...deferredData, ...criticalData});
+  return defer({
+    ...deferredData,
+    ...criticalData,
+  });
 }
 
 /**
@@ -53,10 +53,9 @@ async function loadCriticalData({context, params, request}) {
     storefront.query(PRODUCT_QUERY, {
       variables: {handle, selectedOptions: getSelectedProductOptions(request)},
       buyerIdentity: {
-        countryCode: buyerCountryCode, // ← this is what Shopify is asking for
+        countryCode: buyerCountryCode,
       },
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
 
   if (!product?.id) {
@@ -73,18 +72,14 @@ async function loadCriticalData({context, params, request}) {
   if (firstVariantIsDefault) {
     product.selectedVariant = firstVariant;
   } else {
-    // if no selected variant was returned from the selected options,
-    // we redirect to the first variant's url with it's selected options applied
     if (!product.selectedVariant) {
       throw redirectToFirstVariant({product, request});
     }
   }
 
-  // return {
-  //   product,
-  // };
-  return json({products: response});
+  return {product}; // ✅ Correct return value for use with defer
 }
+
 
 /**
  * Load data for rendering content below the fold. This data is deferred and will be
@@ -159,7 +154,7 @@ export default function Product() {
               price={selectedVariant?.price}
               compareAtPrice={selectedVariant?.compareAtPrice} 
             />
-            <br />
+            {/* <br /> */}
             <Suspense
               fallback={
                 <ProductForm
@@ -183,12 +178,11 @@ export default function Product() {
               </Await>
             </Suspense>
             <br />
-            <br />
-            <p>
-              <strong>Product Description</strong>
-            </p>
+            <div className='mt-3'>
+              <p className='text-lg font-semibold mt-2'>Product Description</p>
+            </div>
             {/* <br /> */}
-            <div dangerouslySetInnerHTML={{__html: descriptionHtml}} className='text-justify' />
+            <div dangerouslySetInnerHTML={{__html: descriptionHtml}} className='text-justify mt-1 leading-normal' />
             <br />
           </div>
           <Analytics.ProductView
