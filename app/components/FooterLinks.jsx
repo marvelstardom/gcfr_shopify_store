@@ -35,7 +35,7 @@ export default function FooterLinks() {
               <li><a href="/collections" className="hover:text-[#e3a81e] ">Collections</a></li>
               <li><a href="/policies/privacy-policy" className="hover:text-[#e3a81e] ">Privacy Policy</a></li>
               {/* <li><a href="/policies/terms-of-service" className="hover:text-[#e3a81e] ">Terms of Service</a></li> */}
-              <li><a href="/contact" className="hover:text-[#e3a81e] ">Contact</a></li>
+              <li><a href="/pages/contact" className="hover:text-[#e3a81e] ">Contact</a></li>
             </ul>
           </div>
 
@@ -62,7 +62,7 @@ export default function FooterLinks() {
           <div className='w-full md:w-full lg:w-[45%]'>
             <h3 className="lg:text-lg font-semibold lg:mb-4 md:mb-4 mb-2">Subscribe to Our Newsletter</h3>
             <form
-              className="flex flex-row sm:flex-row items-center gap-2"
+              className="flex flex-col md:flex-row sm:flex-row md:items-center md:gap-2 gap-3"
               onSubmit={(e) => {
                 e.preventDefault();
                 alert('Thanks for Subscribing!');

@@ -1,5 +1,6 @@
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {useLoaderData, Link} from '@remix-run/react';
+import GCFRChatbot from '~/components/GCFRChatbot';
 import { Footer } from '~/components/Footer';
 import FooterLinks from '~/components/FooterLinks';
 import {
@@ -108,8 +109,9 @@ export default function Collection() {
           }}
         />
       </div>
+      <GCFRChatbot />
       <FooterLinks/>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 }
