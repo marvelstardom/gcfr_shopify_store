@@ -1,5 +1,6 @@
 import React from 'react';
-import { Mail, MapPin, Phone, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Mail, MapPin, Phone, } from 'lucide-react';
+import { FaTiktok, FaFacebook, FaInstagram, FaInstagramSquare } from "react-icons/fa";
 import { productImgs } from './productImgs';
 
 export default function FooterLinks() {
@@ -84,14 +85,14 @@ export default function FooterLinks() {
             {/* Social Icons */}
             <div className='mt-6'>
               <div className='flex gap-3'>
-                <a href="https://www.facebook.com/share/1CKnx5pwLZ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e]">
-                  <Facebook size={30} />
+                <a href="https://www.facebook.com/share/1CKnx5pwLZ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e] text-2xl ">
+                  <FaFacebook />
                 </a>
-                <a href="https://www.instagram.com/g_c_f_r?igsh=amU1OG9pMXQ5djc2&utm_source=qr" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e]">
-                  <Instagram size={30} />
+                <a href="https://www.instagram.com/g_c_f_r?igsh=amU1OG9pMXQ5djc2&utm_source=qr" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e] text-2xl ">
+                  <FaInstagramSquare />
                 </a>
-                <a href="https://www.tiktok.com/@g_c_f_r?_t=ZN-8xAnFY342jO&_r=1" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e]">
-                  <span className='text-black font-bold outline-2 outline-black'>t</span>
+                <a href="https://www.tiktok.com/@g_c_f_r?_t=ZN-8xAnFY342jO&_r=1" target="_blank" rel="noopener noreferrer" className="hover:text-[#e3a81e] text-2xl ">
+                  <FaTiktok />
                 </a>
               </div>
             </div>
