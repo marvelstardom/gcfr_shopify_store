@@ -44,7 +44,7 @@ export default function Contact() {
             <div>
               <label className="block text-sm font-medium">Email Address</label>
               <input
-                type="email"
+                type="text"
                 className="lg:w-[600px] w-full border rounded-lg px-4 py-2"
                 placeholder="your@email.com"
                 required
@@ -76,13 +76,13 @@ export default function Contact() {
                         <p className='text-xl'>+234 703 917 7508</p>
                     </div>
                     <div className='border-b lg:border-none mb-2 pb-2 lg:mb-0 lg:pb-0'>
-                        <p className='font-medium uppercase'>Email</p> 
-                        <p className='text-xl'>goldenchoicefr@gmail.com</p>
+                      <p className='font-medium uppercase'>Email</p> 
+                      <p className='text-xl'>goldenchoicefr@gmail.com</p>
                     </div>
                 </div>
                 <div className='lg:w-1/2 lg:pl-4'>
-                    <p className='font-medium uppercase'>Address</p> 
-                    <p className='text-xl'>200 Commercial Road, Byker, Newcastle upon Tyne, NE6 2ED, United Kingdom.</p>
+                  <p className='font-medium uppercase'>Address</p> 
+                  <p className='text-xl'>United Kingdom.</p>
                 </div>
             </div>
         </div>
