@@ -1,22 +1,28 @@
 import React from 'react';
 import {Await, useLoaderData, Link} from '@remix-run/react';
 import {Suspense} from 'react';
+import GCFRChatbot from '~/components/GCFRChatbot';
+import { productImgs } from '~/components/productImgs';
 import { Footer } from '~/components/Footer';
 import FooterLinks from '~/components/FooterLinks';
 
 export default function Contact() {
+  // const contactImage = productImgs[3]
   return (
     <div className="w-full mt-32">
       {/* Hero Banner */}
-      <section className="contact-img relative md:h-72 h-96 bg-cover bg-top flex items-center justify-center text-white rounded-none">
-        <h1 className="relative lg:text-6xl text-4xl text-[#febc22] font-bold z-10">Contact Us</h1>
+      <section className="contact-img relative h-72 bg-cover bg-top flex items-center justify-center text-white rounded-none">
+        <div className='bg-black px-6 m-0 rounded-xl opacity-40 h-20 md:w-1/3 w-[80%] absolute'>
+        </div>
+          <h1 className="relative lg:text-6xl m-0 p-0 text-6xl text-[#febc22] font-bold z-10">Contact Us</h1>
       </section>
 
       {/* Contact Section */}
       <section className="flex flex-col md:flex-row px-12 md:px-20 lg:pl-24 py-24 mt-6 gap-16 bg-white">
         {/* Map */}
         <div className="w-full md:w-1/2">
-          <iframe
+          <img src='https://cdn.shopify.com/s/files/1/0893/4555/6809/files/IMG-20250222-WA0066.jpg?v=1740230019' className='' alt='contact image' />
+          {/* <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2290.0924915230967!2d-1.5752516236452552!3d54.97147715189951!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487e708c9924af3f%3A0x495a4a041a9469fc!2s200%20Commercial%20Rd%2C%20Byker%2C%20Newcastle%20upon%20Tyne%20NE6%202ED%2C%20UK!5e0!3m2!1sen!2sng!4v1748608202012!5m2!1sen!2sng"
             width="100%"
             height="100%"
@@ -25,7 +31,7 @@ export default function Contact() {
             referrerPolicy="no-referrer-when-downgrade"
             className="border-0 rounded-2xl"
             title="Golden Choice Fashion Map"
-          ></iframe>
+          ></iframe> */}
         </div>
 
         {/* Form */}
@@ -90,6 +96,7 @@ export default function Contact() {
       </section>
 
       {/* <Footer /> */}
+      <GCFRChatbot />
       <FooterLinks />
     </div>
   );

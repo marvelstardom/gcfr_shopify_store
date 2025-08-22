@@ -2,6 +2,7 @@ import {useLoaderData, Link} from '@remix-run/react';
 import {defer} from '@shopify/remix-oxygen';
 import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import GCFRChatbot from '~/components/GCFRChatbot';
 import { Footer } from '~/components/Footer';
 import FooterLinks from '~/components/FooterLinks';
 
@@ -71,6 +72,7 @@ export default function Collections() {
           )}
         </PaginatedResourceSection>
       </div>
+      <GCFRChatbot />
       <FooterLinks />
     </div>
   );

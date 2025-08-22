@@ -73,7 +73,7 @@ const GCFRChatbot = () => {
   return (
     <div className="fixed bottom-4 right-4 z-50">
       {isOpen ? (
-        <div className="w-[400px] h-[32rem] flex flex-col justify-end items-end gap-2">
+        <div className="md:w-[400px] w-[360px] md:h-[32rem] h-[28rem] flex flex-col justify-end items-end gap-2">
           <div className='bg-gradient-to-b from-orange-300 to-[#e3a81e] text-sm shadow-2xl rounded-xl flex flex-col overflow-hidden'>
             <div className="bg-gradient-to-b from-orange-400 to-[#e3a81e] text-white px-6 py-3 flex justify-between items-center">
               <div className='flex flex-col'>
@@ -95,14 +95,6 @@ const GCFRChatbot = () => {
                 </div>
               </div>
 
-              {messages.map((msg, i) => (
-                <div key={i} className={`p-2 rounded-md max-w-[80%] ${msg.type === 'user' ? 'bg-yellow-100 self-end' : 'bg-gray-100 self-start text-[16px]'}`}>
-                  {msg.text}
-                </div>
-              ))}
-
-              {loading && <p className="text-gray-400 text-xs">Typing...</p>}
-
               {/* Quick Replies */}
               <div className="space-y-1">
                 {quickReplies.map((text, index) => (
@@ -115,21 +107,30 @@ const GCFRChatbot = () => {
                   </button>
                 ))}
               </div>
+              
+              {messages.map((msg, i) => (
+                <div key={i} className={`p-2 rounded-md max-w-[80%] ${msg.type === 'user' ? 'bg-yellow-100 self-end' : 'bg-gray-100 self-start text-[16px]'}`}>
+                  {msg.text}
+                </div>
+              ))}
+
+              {loading && <p className="text-gray-400 text-xs">Typing...</p>}
+
             </div>
 
             {/* Input */}
-            <div className="flex border-t py-3 px-5 bg-white">
+            <div className="flex border-t py-5 px-5 bg-white">
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                className="flex-1 p-2 text-xs border rounded-l-lg outline-none"
+                className="flex-1 p-2 pl-3 text-xs border rounded-l-lg outline-none"
                 placeholder="Ask a question"
               />
               <button
                 onClick={handleSend}
                 disabled={loading}
-                className="bg-[#d09a1b] text-white border border-[#d09a1b] px-4 rounded-r-lg text-md cursor-pointer"
+                className="bg-[#d09a1b] text-white border border-[#d09a1b] px-5 py-3 rounded-r-lg text-md cursor-pointer"
               >
                 Send
               </button>

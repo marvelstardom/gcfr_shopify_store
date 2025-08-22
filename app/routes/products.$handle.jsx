@@ -11,6 +11,7 @@ import {getVariantUrl} from '~/lib/variants';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
+import GCFRChatbot from '~/components/GCFRChatbot';
 import { Footer } from '~/components/Footer';
 import FooterLinks from '~/components/FooterLinks';
 
@@ -203,7 +204,8 @@ export default function Product() {
         </div>
       </div>
       <FooterLinks/>
-      <Footer/>
+      <GCFRChatbot />
+      {/* <Footer/> */}
     </div>
   );
 }
