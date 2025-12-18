@@ -14,7 +14,8 @@ import {ProductForm} from '~/components/ProductForm';
 import GCFRChatbot from '~/components/GCFRChatbot';
 import { Footer } from '~/components/Footer';
 import FooterLinks from '~/components/FooterLinks';
-
+import { useCurrency } from '~/hooks/useCurrency';
+import { convertPrice, formatCurrency } from '~/utils/currencyUtils';
 
 
 /**
@@ -151,10 +152,44 @@ export default function Product() {
           </div>
           <div className="product-main">
             <h1 className='font-semibold text-4xl'>{title}</h1>
-            <ProductPrice
+
+            {/* <ProductPrice
               price={selectedVariant?.price}
               compareAtPrice={selectedVariant?.compareAtPrice} 
-            />
+            /> */}
+
+            {(() => {
+              const currency = useCurrency();
+
+              const base = selectedVariant?.price;
+              const compareAt = selectedVariant?.compareAtPrice;
+
+              // ✅ Convert prices
+              const converted = base
+                ? convertPrice(Number(base.amount), base.currencyCode, currency)
+                : 0;
+              const display = base
+                ? formatCurrency(converted, currency)
+                : '';
+
+              const convertedCompare = compareAt
+                ? convertPrice(Number(compareAt.amount), compareAt.currencyCode, currency)
+                : null;
+              const displayCompare = convertedCompare
+                ? formatCurrency(convertedCompare, currency)
+                : null;
+
+              return (
+                <div className="my-4">
+                  <p className="text-xl font-semibold">{display}</p>
+                  {displayCompare && (
+                    <p className="line-through text-gray-500">{displayCompare}</p>
+                  )}
+                </div>
+              );
+            })()}
+
+
             {/* <br /> */}
             <Suspense
               fallback={

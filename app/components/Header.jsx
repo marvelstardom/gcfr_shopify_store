@@ -181,17 +181,53 @@ function SearchToggle() {
   );
 }
 
+// function CurrencySwitcher() {
+//   const [currency, setCurrency] = useState(
+//     typeof window !== 'undefined' && localStorage.getItem('selected-currency') || 'GBP'
+//   );
+
+//   const handleChange = (e) => {
+//     const selectedCurrency = e.target.value;
+//     setCurrency(selectedCurrency);
+//     if (typeof window !== 'undefined') {
+//       localStorage.setItem('selected-currency', selectedCurrency);
+//       window.location.href = `/?currency=${selectedCurrency}`; // reload with query param
+//     }
+//   };
+
+//   return (
+//     <div className="ml-4">
+//       <label htmlFor="currency" className="sr-only">Currency</label>
+//       <select
+//         id="currency"
+//         value={currency}
+//         onChange={handleChange}
+//         className="border px-2 py-1 text-sm rounded-md"
+//       >
+//         <option value="GBP">GBP (£)</option>
+//         <option value="NGN">NGN (₦)</option>
+//         <option value="USD">USD ($)</option>
+//       </select>
+//     </div>
+//   );
+// }
+
 function CurrencySwitcher() {
   const [currency, setCurrency] = useState(
-    typeof window !== 'undefined' && localStorage.getItem('selected-currency') || 'GBP'
+    (typeof window !== 'undefined' && localStorage.getItem('selected-currency')) || 'GBP'
   );
 
   const handleChange = (e) => {
     const selectedCurrency = e.target.value;
+
+    // ✅ guard against invalid values
+    if (!['GBP', 'USD', 'NGN'].includes(selectedCurrency)) return;
+
     setCurrency(selectedCurrency);
+
     if (typeof window !== 'undefined') {
       localStorage.setItem('selected-currency', selectedCurrency);
-      window.location.href = `/?currency=${selectedCurrency}`; // reload with query param
+      window.location.reload(); // safer than messing with ?currency=
     }
   };
 
@@ -202,7 +238,7 @@ function CurrencySwitcher() {
         id="currency"
         value={currency}
         onChange={handleChange}
-        className="border px-2 py-1 text-sm rounded-md"
+        className="border px-2 py-1 text-sm rounded-md cursor-pointer"
       >
         <option value="GBP">GBP (£)</option>
         <option value="NGN">NGN (₦)</option>
@@ -212,16 +248,6 @@ function CurrencySwitcher() {
   );
 }
 
-
-// function Currency(){
-//   const {shop} = useAnalytics();
-//   return (
-//     <div className='flex items-center gap-2 text-black hover:text-[#e3a81e] text-md'>
-//       <span className='text-sm'>Currency:</span>
-//       <span className='text-sm'>{shop.currencyCode}</span>
-//     </div>
-//   );
-// }
 
 /**
  * @param {{count: number | null}}

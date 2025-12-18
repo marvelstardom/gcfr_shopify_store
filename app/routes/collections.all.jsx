@@ -6,6 +6,8 @@ import GCFRChatbot from '~/components/GCFRChatbot';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import { Footer } from '~/components/Footer';
 import FooterLinks from '~/components/FooterLinks';
+import { useCurrency } from "~/hooks/useCurrency";
+import { convertPrice, formatCurrency } from "~/utils/currencyUtils";
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -82,7 +84,6 @@ export default function Collection() {
       </div>
       <GCFRChatbot />
       <FooterLinks />
-      {/* <Footer /> */}
     </div>
   );
 }
@@ -94,6 +95,7 @@ export default function Collection() {
  * }}
  */
 function ProductItem({product, loading}) {
+  const currency = useCurrency();
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (

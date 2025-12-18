@@ -14,6 +14,8 @@ import Testimonials from '~/components/Testimonials';
 import DialogflowChatbot from '~/components/DialogflowChatbot';
 import FAQComponent from '~/components/FAQComponent';
 import GCFRChatbot from '~/components/GCFRChatbot';
+import { useCurrency } from "~/hooks/useCurrency";
+import { convertPrice, formatCurrency } from "~/utils/currencyUtils";
 
 /**
  * @type {MetaFunction}
@@ -166,6 +168,7 @@ export default function Homepage() {
 }
 
 export function TabComponent({ collectionsData }) {
+  const currency = useCurrency();
   const tabs = ['The Perfect Groom', 'Gentleman Collection', 'The Modern Man'];
 
   const tabHandles = {
@@ -181,7 +184,6 @@ export function TabComponent({ collectionsData }) {
   console.log('collectionsData in TabComponent:', collectionsData);
 
   // Grab the collection based on active tab
-  // const currentCollection = collectionsData?.[tabHandles[activeTab]]?.collection;
   const currentCollection = collectionsData?.[tabHandles[activeTab]]
   if (!currentCollection) {
     console.warn(`No collection found for handle: ${tabHandles[activeTab]}`);
@@ -191,7 +193,12 @@ export function TabComponent({ collectionsData }) {
   const allProducts = currentCollection?.products?.nodes || [];
 
   // Slice products to visible count
-  const visibleProducts = useMemo(() => allProducts.slice(0, visibleCount), [allProducts, visibleCount]);
+  // const visibleProducts = useMemo(() => allProducts.slice(0, visibleCount), [allProducts, visibleCount]);
+
+  const visibleProducts = useMemo(
+    () => allProducts.slice(0, visibleCount),
+    [allProducts, visibleCount]
+  );
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -225,7 +232,7 @@ export function TabComponent({ collectionsData }) {
       </div>
 
       {/* Products grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {visibleProducts.length === 0 ? (
           <p className="text-center col-span-full text-gray-500">No products available.</p>
         ) : (
@@ -250,7 +257,29 @@ export function TabComponent({ collectionsData }) {
             </Link>
           ))
         )}
-      </div>
+      </div> */}
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {visibleProducts.map((product) => {
+        const baseAmount = Number(product.priceRange.minVariantPrice.amount);
+        const baseCurrency = product.priceRange.minVariantPrice.currencyCode;
+
+        const converted = convertPrice(baseAmount, baseCurrency, currency);
+        const display = formatCurrency(converted, currency);
+
+        return (
+          <Link key={product.id} to={`/products/${product.handle}`}>
+            <img
+              src={product.images.nodes[0].url}
+              alt={product.title}
+              className="rounded-lg w-full object-cover aspect-square"
+            />
+            <h4 className="mt-2 font-medium">{product.title}</h4>
+            <small className="text-gray-600">{display}</small>
+          </Link>
+        );
+      })}
+    </div>
 
       {/* Load more button */}
       {visibleCount < allProducts.length && (
@@ -310,35 +339,52 @@ function FeaturedCollection({collections}) {
  *   products: Promise<RecommendedProductsQuery | null>;
  * }}
  */
-function RecommendedProducts({products}) {
+
+
+function RecommendedProducts({ products }) {
+  const currency = useCurrency();
+
   return (
     <div className="recommended-products lg:pb-20 sm:pb-24 z-0">
-      <h2 className='text-black text-center lg:pt-24 sm:pt-12 font-semibold lg:text-5xl text-4xl lg:mb-4 sm:mb-2'>Recommended Products</h2>
-      <p className='uppercase text-gray-400 text-lg text-center'>Carefully Chosen For You</p>
+      <h2 className="text-black text-center lg:pt-24 sm:pt-12 font-semibold lg:text-5xl text-4xl lg:mb-4 sm:mb-2">
+        Recommended Products
+      </h2>
+      <p className="uppercase text-gray-400 text-lg text-center">
+        Carefully Chosen For You
+      </p>
+
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
             <div className="recommended-products-grid mt-12">
               {response
-                ? response.products.nodes.map((product) => (
-                    <Link
-                      key={product.id}
-                      className="recommended-product"
-                      to={`/products/${product.handle}`}
-                    >
-                      <Image
-                        data={product.images.nodes[0]}
-                        aspectRatio="1/1"
-                        sizes="50vw"
-                      />
-                      <div className='flex flex-col gap-1 mt-4'>
-                        <h4 className='font-normal text-md'>{product.title}</h4>
-                        <h4 className='font-medium text-lg'>
-                          <Money data={product.priceRange.minVariantPrice} />
-                        </h4>
-                      </div>
-                    </Link>
-                  ))
+                ? response.products.nodes.map((product) => {
+                    const base = product.priceRange.minVariantPrice;
+                    const converted = convertPrice(
+                      Number(base.amount),
+                      base.currencyCode,
+                      currency
+                    );
+                    const display = formatCurrency(converted, currency);
+
+                    return (
+                      <Link
+                        key={product.id}
+                        className="recommended-product"
+                        to={`/products/${product.handle}`}
+                      >
+                        <Image
+                          data={product.images.nodes[0]}
+                          aspectRatio="1/1"
+                          sizes="50vw"
+                        />
+                        <div className="flex flex-col gap-1 mt-4">
+                          <h4 className="font-normal text-md">{product.title}</h4>
+                          <h4 className="font-medium text-lg">{display}</h4>
+                        </div>
+                      </Link>
+                    );
+                  })
                 : null}
             </div>
           )}
